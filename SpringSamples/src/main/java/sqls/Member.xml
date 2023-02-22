@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Member">
+	<select id="allMember" resultType="mul.cam.a.dto.MemberDTO">
+		select id, pwd, name, email, auth
+		from member
+	</select>
+	<select id="idCheck" resultType="String">
+		select id
+		from member
+		where id=#{id}
+	</select>
+	<insert id="addMember" parameterType="mul.cam.a.dto.MemberDTO">
+		insert into member(id, pwd, name, email, auth)
+		values(#{id}, #{pwd}, #{name}, #{email}, 0)
+	</insert>
+	<select id="login" parameterType="mul.cam.a.dto.MemberDTO" resultType="mul.cam.a.dto.MemberDTO">
+		select id, name, email
+		from member
+		where id=#{id} and pwd=#{pwd}
+	</select>
+</mapper>

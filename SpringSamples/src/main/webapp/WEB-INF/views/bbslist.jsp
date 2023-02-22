@@ -7,9 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-<!-- 	<a href="home.do">home</a> -->
-<%
-response.sendRedirect("home.do");
-%>
+	<h1>bbslist</h1>
 </body>
 </html>
