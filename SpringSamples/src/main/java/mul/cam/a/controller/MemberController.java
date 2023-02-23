@@ -85,13 +85,6 @@ public class MemberController {
 		return "message";
 	}
 	
-	@RequestMapping(value = "bbslist.do", method = RequestMethod.GET)
-	public String bbslist() {
-		System.out.println("MemberController bbslist " + new Date());
-
-		return "bbslist";
-	}
-	
 }
 
 
