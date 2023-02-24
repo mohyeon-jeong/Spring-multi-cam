@@ -66,7 +66,7 @@ if(answer != null && !answer.equals("")){
 		%>
 		<script type="text/javascript">
 		alert("답글이 성공적으로 작성되었습니다");
-		location.href = "bbs?param=bbslist";
+		location.href = "bbslist.do";
 		</script>
 		<%
 	}
@@ -76,7 +76,7 @@ if(answer != null && !answer.equals("")){
 		<script type="text/javascript">
 		alert("답글을 다시 작성해 주십시오");
 		let seq = "<%=seq %>";		
-		location.href = "bbs?param=answer&seq=" + seq;
+		location.href = "answer.do&seq=" + seq;
 		</script>
 		<%
 	}	
@@ -88,7 +88,7 @@ if(bbsupdate != null && !bbsupdate.equals("")){
 		%>
 		<script type="text/javascript">
 		alert("성공적으로 수정되었습니다");
-		location.href = "bbs?param=bbslist";
+		location.href = "bbslist.do";
 		</script>
 		<%
 	}
@@ -97,8 +97,8 @@ if(bbsupdate != null && !bbsupdate.equals("")){
 		%>
 		<script type="text/javascript">
 		alert("다시 작성해 주십시오");
-		let seq = "<%=seq %>";		
-		location.href = "bbs?param=bbsupdate&seq=" + seq;
+		let seq = "<%=seq %>";
+		location.href = "bbsupdate.do&seq=" + seq;
 		</script>
 		<%
 	}	
@@ -110,7 +110,7 @@ if(bbsdelete != null && !bbsdelete.equals("")){
 		%>
 		<script type="text/javascript">
 		alert("성공적으로 삭제되었습니다");
-		location.href = "bbs?param=bbslist";
+		location.href = "bbslist.do";
 		</script>
 		<%
 	}
@@ -118,10 +118,20 @@ if(bbsdelete != null && !bbsdelete.equals("")){
 		%>
 		<script type="text/javascript">
 		alert("삭제되지 않았습니다");		
-		location.href = "bbs?param=bbslist";
+		location.href = "bbslist.do";
 		</script>
 		<%
 	}	
+}
+
+String sessionOut = (String)request.getAttribute("sessionOut");
+if(sessionOut != null && !sessionOut.equals("")){
+		%>
+		<script type="text/javascript">
+		alert("세션이 만료되었습니다. 다시 로그인 해 주십시오");
+		location.href = "login.do";
+		</script>
+		<%
 }
 %>
 

@@ -7,12 +7,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Insert title here</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <style type="text/css">
 th {
 	background-color: #007bff;
@@ -82,19 +83,90 @@ pre {
 	</div>
 
 	<script type="text/javascript">
-function answerBbs( seq ) {
-	location.href = "bbs?param=answer&seq=" + seq;
-}
-function updateBbs( seq ) {
-	location.href = "bbs?param=bbsupdate?seq=" + seq;
-}
-function deleteBbs( seq ) {
-	location.href = "bbs?param=bbsdelete?seq=" + seq;  // update del=1
-}
-</script>
-
+		function answerBbs( seq ) {
+			location.href = "answer.do?seq=" + seq;
+		}
+		function updateBbs( seq ) {
+			location.href = "bbsupdate.do?seq=" + seq;
+		}
+		function deleteBbs( seq ) {
+			location.href = "bbsdelete.do?seq=" + seq;  // update del=1
+		}
+	</script>
+	<br><br>
+	<!-- 댓글 -->
+	<div id="app" class="container">
+		<form action="commentWriteAf.do" method="post">
+			<input type="hidden" name="seq" value="<%=dto.getSeq() %>">
+			<input type="hidden" name="id" value="<%=login.getId() %>">
+			<table>
+				<col width="1500px">
+				<col width="150px">
+				<tr>
+					<td>comment</td>
+					<td style="padding-left: 30px">올리기</td>
+				</tr>
+				<tr>
+					<td>
+						<textarea rows="3" class="form-control" name="content"></textarea>
+					</td>
+					<td style="padding-left: 30px">
+						<button type="submit" class="btn btn-primary btn-block p-4">완료</button>
+					</td>
+				</tr>
+			</table>
+		</form>
+		<br><br>
+		<table class="table">
+			<col width="500">
+			<col width="500">
+			<tbody id="tbody">
+				
+			</tbody>
+		</table>
+	</div>
+	<script type="text/javascript">
+		$.ajax({
+			url: "./commentList.do",
+			type: "get",
+			data: { "seq":<%=dto.getSeq()%> },
+			success: function(list) {
+				$("#tbody").html("");
+				$.each(list, function(index, item) {
+					let str = "<tr class='table-info'>"
+							+ "<td>작성자 : " + item.id + "</td>"
+							+ "<td>작성일 : " + item.wdate + "</td>"
+							+ "</tr>"
+							+ "<tr>"
+							+ "<td colspan='2'>내용 : " + item.content + "</td>"
+							+ "</tr>";
+					$("#tbody").append(str);
+				})
+			},
+			error: function() {
+				alert("error");
+			}
+		})
+	</script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

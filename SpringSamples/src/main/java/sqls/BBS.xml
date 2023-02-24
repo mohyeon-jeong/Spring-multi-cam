@@ -7,8 +7,9 @@
 		from (select row_number()over(order by ref desc, step asc) as rnum,
 			seq, id, ref, step, depth, title, content, wdate, del, readcount
 		from bbs
-		where 1=1 and del=0
+		where 1=1
 		<if	test="choice != null and choice != '' and search != null and search != ''">
+			and del=0
 			<if test="choice == 'title'">
 				and title like concat('%', #{search}, '%')
 			</if>
@@ -48,6 +49,43 @@
 		select seq, id, ref, step, depth, title, content, wdate, del, readcount
 		from bbs
 		where seq=#{seq}
+	</select>
+	<update id="updateBbs">
+		update bbs
+		set title=#{title}, content=#{content}
+		where seq=#{seq}
+	</update>
+	<update id="deleteBbs">
+		update bbs
+		set del=1
+		where seq=#{seq}
+	</update>
+	<update id="updateStep">
+		update bbs
+		set step=step+1
+		where ref=(select ref from (select ref from bbs a where seq=#{seq}) A)
+			and step>(select step from (select step from bbs b where seq=#{seq}) B)
+	</update>
+	<insert id="writeAnswer" parameterType="mul.cam.a.dto.BbsDTO">
+		insert into bbs(id, ref, step, depth, title, content, wdate, del, readcount)
+					values(#{id},
+							(select ref from bbs a where seq=#{seq}),
+							(select step from bbs b where seq=#{seq})+1,
+							(select depth from bbs c where seq=#{seq})+1,
+							#{title}, #{content}, now(), 0, 0)
+	</insert>
+	
+	<!-- 댓글 -->
+	<insert id="commentWrite" parameterType="mul.cam.a.dto.BbsComment">
+		insert into bbscomment(seq, id, content, wdate)
+		values(#{seq}, #{id}, #{content}, now())
+	</insert>
+	
+	<select id="commentList" parameterType="Integer" resultType="mul.cam.a.dto.BbsComment">
+		select seq, id, content, wdate
+		from bbscomment
+		where seq=#{seq}
+		order by wdate desc
 	</select>
 </mapper>
 

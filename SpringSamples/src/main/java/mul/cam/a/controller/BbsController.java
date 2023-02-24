@@ -7,7 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import mul.cam.a.dto.BbsComment;
 import mul.cam.a.dto.BbsDTO;
 import mul.cam.a.dto.BbsParam;
 import mul.cam.a.service.BbsService;
@@ -70,6 +72,8 @@ public class BbsController {
 		model.addAttribute("bbswrite", message);
 		
 		return "message";
+//		return "redirect:/bbslist.do"; // Controller간 이동 시에 사용 가능 (그냥 return ~~.do 하면 ~~.do.jsp로 가짐) == sendRedirect
+//		return "forward:/bbslist.do"; // 데이터도 가져갈 때는 forward 사용
 	}
 	
 	@GetMapping(value = "bbsdetail.do")
@@ -78,6 +82,88 @@ public class BbsController {
 		model.addAttribute("bbsdto", dto);
 		
 		return "bbsdetail";
+	}
+	
+	@GetMapping(value = "bbsupdate.do")
+	public String bbsUpdate(Model model, int seq) {
+		BbsDTO dto = service.getBbs(seq);
+		model.addAttribute("updatebbs", dto);
+		
+		return "bbsupdate";
+	}
+	
+	@PostMapping(value = "bbsUpdateAf.do")
+	public String bbsUpdateAf(BbsDTO dto, Model model) {
+		String bbsupdate = "";
+		boolean isS = service.updateBbs(dto);
+		if (isS) {
+			bbsupdate = "BBS_UPDATE_OK";
+		} else {
+			bbsupdate = "BBS_UPDATE_FAILED";
+			model.addAttribute("seq", dto.getSeq());
+		}
+		
+		model.addAttribute("bbsupdate", bbsupdate);
+		
+		return "message";
+	}
+	
+	@GetMapping(value = "bbsdelete.do")
+	public String bbsDelete(int seq, Model model) {
+		String bbsdelete = "";
+		boolean isS	= service.deleteBbs(seq);
+		if (isS) {
+			bbsdelete = "BBS_DELETE_OK";
+		}
+		
+		model.addAttribute("bbsdelete", bbsdelete);
+		
+		return "message";
+	}
+	
+	@GetMapping(value = "answer.do")
+	public String answer(int seq, Model model) {
+		BbsDTO dto = service.getBbs(seq);
+		
+		model.addAttribute("dto", dto);
+		
+		return "answer";
+	}
+	
+	@PostMapping(value = "answerAf.do")
+	public String answerAf(BbsDTO dto, Model model) {
+		String answer = "";
+		boolean isS = service.writeAnswer(dto.getSeq(), dto);
+		if (isS) {
+			answer = "BBS_ANSWER_OK";
+		} else {
+			answer = "BBS_ANSWER_FAILED";
+		}
+		
+		model.addAttribute("answer", answer);
+		
+		return "message";
+	}
+	
+	// comment
+	@PostMapping(value = "commentWriteAf.do")
+	public String commentWrite(BbsComment bbs, Model model) {
+		boolean isS = service.commentWrite(bbs);
+		if (isS) {
+			System.out.println("comment succeeded");
+		} else {
+			System.out.println("comment failed");
+		}
+		
+		return "redirect:/bbsdetail.do?seq=" + bbs.getSeq();
+	}
+	
+	@ResponseBody
+	@GetMapping(value = "commentList.do")
+	public List<BbsComment> commentList(int seq) {
+		List<BbsComment> list = service.commentList(seq);
+		
+		return list;
 	}
 	
 }

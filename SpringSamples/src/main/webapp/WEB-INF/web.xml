@@ -20,6 +20,7 @@
   		<param-name>contextConfigLocation</param-name>
   		<param-value>
   			/WEB-INF/spring/servlet-context.xml
+  			/WEB-INF/spring/aop-context.xml
   		</param-value>
   	</init-param>
   	
@@ -41,6 +42,7 @@
   <listener>
   	<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
+  
   
   <!-- 한글설정 :  -->
   <filter>

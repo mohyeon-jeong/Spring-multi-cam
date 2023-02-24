@@ -11,19 +11,13 @@
 <title>Insert title here</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-<script
-	src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.slim.min.js"></script>
-<script
-	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.slim.min.js"></script>
+<script	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <!-- https://github.com/josecebe/twbs-pagination -->
-<script type="text/javascript"
-	src="./jquery/jquery.twbsPagination.min.js"></script>
+<script type="text/javascript" src="./jquery/jquery.twbsPagination.min.js"></script>
 
 </head>
 <body bgcolor="#e9e9e9">
@@ -97,8 +91,7 @@
 					<%
 					} else if (dto.getDel() == 1) {
 					%>
-					<td><%=Utility.arrow(dto.getDepth())%> <font color="#ff0000">***
-							이 글은 작성자에 의해서 삭제되었습니다 ***</font></td>
+					<td><%=Utility.arrow(dto.getDepth())%> <font color="#ff0000">*** 이 글은 작성자에 의해서 삭제되었습니다 ***</font></td>
 					<%
 					}
 					%>
@@ -135,7 +128,7 @@
 
 		<div class="container">
 			<nav aria-label="Page navigation">
-				<ul class="pagination" id="pagination" style="justify-content: center;"></ul>
+				<ul class="pagination" id="pagination" style="justify-content: center"></ul>
 			</nav>
 		</div>
 
@@ -188,27 +181,28 @@
 		location.href = "bbslist.do?choice=" + choice + "&search=" + search;
 	}
 
-	function goPage(pageNumber) {
-		let choice = document.getElementById('choice').value;
-		let search = document.getElementById('search').value;
+// 	function goPage(pageNumber) {
+// 		let choice = document.getElementById('choice').value;
+// 		let search = document.getElementById('search').value;
 
-		location.href = "bbslist.do?choice=" + choice + "&search=" + search	+ "&pageNumber=" + pageNumber;
-	}
+// 		location.href = "bbslist.do?choice=" + choice + "&search=" + search	+ "&pageNumber=" + pageNumber;
+// 	}
 
 	$('#pagination').twbsPagination({
-		startPage : <%=pageNumber + 1%>,
+		startPage : <%=pageNumber+1%>,
 		totalPages : <%=pageBbs%>,
 		visiblePages : 10,
 		first : "<span srid-hidden='true'>«</span>",
 		prev : "이전",
 		next : "다음",
 		last : "<span srid-hidden='true'>»</span>",
-		initiateStartPageClick : function(event, page) {
-			alert(page);
+		initiateStartPageClick : false,
+		onPageClick : function(event, page) {
+// 			alert(page);
 			let choice = document.getElementById('choice').value;
 			let search = document.getElementById('search').value;
 			
-			location.href = "bbslist.do?choice=" + choice + "&search=" + search + "&pageNumber" + (page - 1);
+			location.href = "bbslist.do?choice=" + choice + "&search=" + search + "&pageNumber=" + (page - 1);
 		}
 	})
 	</script>

@@ -1,14 +1,13 @@
-package mul.cam.a.controller;
+package mul.cam.a.member;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -25,14 +24,14 @@ public class MemberController {
 	
 	@RequestMapping(value = "login.do", method = RequestMethod.GET)
 	public String login() {
-		System.out.println("MemberController login " + new Date());
+//		System.out.println("MemberController login " + new Date());
 		
 		return "login";
 	}
 	
 	@RequestMapping(value = "regi.do", method = RequestMethod.GET)
 	public String regi() {
-		System.out.println("MemberController regi " + new Date());
+//		System.out.println("MemberController regi " + new Date());
 		
 		return "regi";
 	}
@@ -40,7 +39,7 @@ public class MemberController {
 	@ResponseBody
 	@RequestMapping(value = "idcheck.do", method = RequestMethod.POST)
 	public String idcheck(String id) {
-		System.out.println("MemberController idcheck " + new Date());
+//		System.out.println("MemberController idcheck " + new Date());
 		
 		String checkedId = service.idCheck(id);
 		
@@ -53,7 +52,7 @@ public class MemberController {
 	
 	@RequestMapping(value = "regiAf.do", method = RequestMethod.POST)
 	public String regiAf(MemberDTO dto, Model model) {
-		System.out.println("MemberController regiAf " + new Date());
+//		System.out.println("MemberController regiAf " + new Date());
 		
 		boolean isS = service.addMember(dto);
 		String message = "";
@@ -69,7 +68,7 @@ public class MemberController {
 	
 	@RequestMapping(value = "loginAf.do", method = RequestMethod.POST)
 	public String login(HttpServletRequest req, Model model, MemberDTO dto) { // req도 model처럼 아무때나 써야할 때 parameter로 추가 가능
-		System.out.println("MemberController login " + new Date());
+//		System.out.println("MemberController login " + new Date());
 		
 		MemberDTO mem = service.login(dto);
 		String msg = "";
@@ -81,6 +80,14 @@ public class MemberController {
 			msg = "LOGIN_NO";
 		}
 		model.addAttribute("login", msg);
+		
+		return "message";
+	}
+	
+	@GetMapping(value = "sessionOut.do")
+	public String sessionOut(Model model) {
+		String sessionOut = "logout";
+		model.addAttribute("sessionOut", sessionOut);
 		
 		return "message";
 	}
