@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Pds">
+	<select id="pdsList" resultType="mul.cam.a.dto.PdsDTO">
+		select seq, id, title, content, fileName, newFileName, 
+			readCount, downCount, regDate
+		from pds
+	</select>
+	<insert id="uploadPds" parameterType="mul.cam.a.dto.PdsDTO">
+		insert into pds(id, title, content, fileName, newFileName, 
+			readCount, downCount, regDate)
+		values(#{id}, #{title}, #{content}, #{fileName}, #{newFileName}, 0, 0, now())
+	</insert>
+</mapper>
