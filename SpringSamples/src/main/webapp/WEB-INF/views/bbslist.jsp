@@ -47,7 +47,7 @@
 	%>
 
 	<h1>게시판</h1>
-	<a href="pdsList.do">자료실</a>
+	<a href="pdslist.do">자료실</a>
 	<hr>
 
 	<div align="center">

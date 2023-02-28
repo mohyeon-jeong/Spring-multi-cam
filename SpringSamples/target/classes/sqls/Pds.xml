@@ -1,14 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Pds">
-	<select id="pdsList" resultType="mul.cam.a.dto.PdsDTO">
+	<select id="pdsList" parameterType="mul.cam.a.dto.PdsParam" resultType="mul.cam.a.dto.PdsDTO">
 		select seq, id, title, content, fileName, newFileName, 
 			readCount, downCount, regDate
 		from pds
+		<if test="choice != null and choice != '' and search != null and search != '' ">
+		 	<if test="choice == 'title'">
+		 		where title like concat('%', #{search}, '%')
+		 	</if>
+		 	<if test="choice == 'content'">
+		 		where content like concat('%', #{search}, '%')
+		 	</if>
+		 	<if test="choice == 'writer'">
+		 		where id=#{search}
+		 	</if>
+		</if>		 
+		order by regDate desc
 	</select>
+	
 	<insert id="uploadPds" parameterType="mul.cam.a.dto.PdsDTO">
-		insert into pds(id, title, content, fileName, newFileName, 
-			readCount, downCount, regDate)
+		insert into pds(id, title, content, fileName, newFileName, readCount, downCount, regDate)
 		values(#{id}, #{title}, #{content}, #{fileName}, #{newFileName}, 0, 0, now())
 	</insert>
+	
+	<update id="downcount" parameterType="Integer">
+		update pds
+		set downCount=downCount+1
+		where seq=#{seq}
+	</update>
+	
+	<select id="getPds" parameterType="Integer" resultType="mul.cam.a.dto.PdsDTO">
+		select seq, id, title, content, fileName, newFileName, readCount, downCount, regDate
+		from pds
+		where seq=#{seq}
+	</select>
+	
+	<update id="updatePds" parameterType="mul.cam.a.dto.PdsDTO">
+		update pds
+		set title=#{title}, content=#{content},
+		fileName=#{fileName}, newFileName=#{newFileName}, regDate=now()
+		where seq=#{seq}
+	</update>
 </mapper>

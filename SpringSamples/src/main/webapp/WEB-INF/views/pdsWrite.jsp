@@ -13,7 +13,7 @@ MemberDTO login = (MemberDTO) session.getAttribute("login");
 <body>
 	<h1>자료 추가</h1>
 	<div align="center">
-		<form action="pdsUpload.do" method="post" enctype="multipart/form-data">
+		<form action="pdsupload.do" method="post" enctype="multipart/form-data">
 			<table border="1">
 				<tr>
 					<th>아이디</th>
