@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+<title>Insert title here</title>
+</head>
+<body>
+	<p id="demo"></p>
+	<button type="button" id="btn">hello</button>
+	<script type="text/javascript">
+		$("#btn").click(function() {
+			$.ajax({
+				url : "http://localhost:3000/",
+				type : "get",
+				success : function(str) {
+// 					alert("success");
+					$("#demo").text(str);
+				},
+				error : function() {
+					alert("failed");
+				}
+			})
+		})
+	</script>
+	<br><br>
+	number : <h3 id="num"></h3>
+	name : <h3 id="name"></h3>
+	address : <h3 id="address"></h3>
+	<button type="button" id="human">human</button>
+	<script type="text/javascript">
+		$("#human").click(function() {
+			$.ajax({
+				url: "http://localhost:3000/human",
+				type: "get",
+				success: function(a) {
+					// alert("success");
+					$("#num").text(a.number);
+					$("#name").text(a.name);
+					$("#address").text(a.address);
+				},
+				error: function() {
+					alert("error");
+				}
+			})
+		})
+	</script>
+	<br><br>
+	<h3 id="param"></h3>
+	<button type="button" id="paramBtn">conn param</button>
+	<script type="text/javascript">
+		$("#paramBtn").click(function() {
+			$.ajax({
+				url: "http://localhost:3000/conn_param",
+				type: "get",
+				data: { "title":"제목" },
+				success: function(str) {
+					$("#param").text(str);
+				},
+				error: function() {
+					alert("error");
+				}
+			})
+		})
+	</script>
+	<br><br>
+	<h3 id="getList"></h3>
+	<button type="button" id="listBtn">list</button>
+	<script type="text/javascript">
+		$("#listBtn").click(function() {
+			$.ajax({
+				url: "http://localhost:3000/get_list",
+				type: "get",
+				data: "",
+				success: function(obj) {
+					
+				},
+				error: function() {
+					alert("get list error");
+				}		
+			})
+		})
+	</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
