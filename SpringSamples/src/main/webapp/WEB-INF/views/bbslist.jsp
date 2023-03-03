@@ -133,8 +133,7 @@
 		</div>
 
 		<br> <br>
-		<div
-			class="form-row align-items-center d-flex justify-content-center align-items-center container">
+		<div class="form-row align-items-center d-flex justify-content-center align-items-center container">
 			<select id="choice">
 				<option value="">검색</option>
 				<option value="title">제목</option>
