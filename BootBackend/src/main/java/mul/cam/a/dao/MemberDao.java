@@ -9,10 +9,8 @@ import mul.cam.a.dto.MemberDto;
 @Repository
 public interface MemberDao {
 
-	int idcheck(String id);
-	
+	int idcheck(String id);	
 	int addmember(MemberDto dto);
 	
 	MemberDto login(MemberDto dto);
-	
 }

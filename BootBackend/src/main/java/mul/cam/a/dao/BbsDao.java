@@ -11,8 +11,16 @@ import mul.cam.a.dto.BbsParam;
 @Mapper
 @Repository
 public interface BbsDao {
-	
-	List<BbsDto> bbsList(BbsParam param);
-	int getAllBbs(BbsParam param);
 
+	List<BbsDto> bbslist(BbsParam param);	
+	int getAllBbs(BbsParam param);
+	
+	BbsDto getBbs(int seq);
+	
+	int writeBbs(BbsDto bbs);
+	
+	int answerBbsUpdate(BbsDto bbs);
+	int answerBbsInsert(BbsDto bbs);
+	
+	int updateBbs(BbsDto bbs);
 }

@@ -37,13 +37,14 @@ public class MemberController {
 		return "YES";
 	}
 	
-	@PostMapping("/login")
+	@PostMapping(value = "/login")
 	public MemberDto login(MemberDto dto) {
 		System.out.println("MemberController login " + new Date());
 		
-		MemberDto mem = service.login(dto);
+		MemberDto mem = service.login(dto);		
 		return mem;
 	}
+	
 	
 }
 

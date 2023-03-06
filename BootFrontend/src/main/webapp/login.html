@@ -34,7 +34,6 @@
       
       <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
       	<!-- <form action="loginAf.do" method="post"> -->
-      	<form id="frm">
       	  <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
             <p class="lead fw-normal mb-0 me-3">Sign in with</p>            
           </div>
@@ -69,14 +68,14 @@
           </div>
           
           <div class="text-center text-lg-start mt-4 pt-2">
-            <button type="button" id="loginBtn" class="btn btn-primary btn-lg"
+            <button type="button" id="login" class="btn btn-primary btn-lg"
               style="padding-left: 2.5rem; padding-right: 2.5rem;">Login</button>
             <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account? 
             	<a href="#" onclick="account()" class="link-danger">Register</a>
             </p>
           </div>         
           
-      	</form>
+      	<!-- </form> -->
       	
       </div>      
     </div>    
@@ -110,57 +109,65 @@
 </section>
 
 <script type="text/javascript">
-	$("#loginBtn").click(function() {
-		$.ajax({
-			url: "http://localhost:3000/login",
-			type: "post",
-			data: { id:$("#id").val(), pwd:$("#pwd").val() },
-			success: function(mem) {
-				if (mem == "") {
-					alert("ID 혹은 비밀번호를 다시 확인하세요");
-					$("#id").val("");
-					$("#pwd").val("");
-					$("#id").focus();
-				} else {
-					sessionStorage.setItem("login", JSON.stringify(mem)); // == setAttribute
-					alert(mem.name + "님 로그인 되었습니다");
-					location.href = "bbslist.html";
-				}
-			},
-			error: function() {
-				alert("error : login failed");
-			}
-		})
-	})
+
+$("#login").click(function () {
 	
-	function account() {	
-		location.href = "regi.html";
-	}
-	
-	let user_id = $.cookie("user_id");
-	
-	if(user_id != null){	// 저장한 id가 있음
-		$("#id").val(user_id);
-		$("#chk_save_id").prop("checked", true);
-	}
-	
-	$("#chk_save_id").click(function () {
-		
-		if( $("#chk_save_id").is(":checked") == true ){
-			
-			if( $("#id").val().trim() == "" ){
-				alert('id를 입력해 주십시오');
-				$("#chk_save_id").prop("checked", false);
+	$.ajax({
+		url:"http://70.12.113.114:3000/login",
+		type:"post",
+		data:{ id:$("#id").val(), pwd:$("#pwd").val() },
+		success:function(mem){
+			// alert("mem:" + JSON.stringify(mem));
+			if(mem == ""){
+				alert('id 또는 password를 확인하세요');
+				$("#id").val("");
+				$("#pwd").val("");
+				$("#id").focus();
 			}else{
-				// cookie를 저장
-				$.cookie("user_id", $("#id").val().trim(), { expires:7, path:'./' });
-			}
-			
+				// session 저장 		localStorage  sessionStorage
+				sessionStorage.setItem("login", JSON.stringify(mem));  // == setAttribute
+				alert(mem.name + "님의 로그인을 환영합니다");
+				
+				location.href = "bbslist.html";
+			}			
+		},
+		error:function(){
+			alert('error');
+		}		
+	});	
+});
+
+function account() {	
+	location.href = "regi.html";
+}
+
+let user_id = $.cookie("user_id");
+
+if(user_id != null){	// 저장한 id가 있음
+	$("#id").val(user_id);
+	$("#chk_save_id").prop("checked", true);
+}
+
+$("#chk_save_id").click(function () {
+	
+	if( $("#chk_save_id").is(":checked") == true ){
+		
+		if( $("#id").val().trim() == "" ){
+			alert('id를 입력해 주십시오');
+			$("#chk_save_id").prop("checked", false);
 		}else{
-			$.removeCookie("user_id", { path:'./' });
-		}	
-	});
+			// cookie를 저장
+			$.cookie("user_id", $("#id").val().trim(), { expires:7, path:'./' });
+		}
+		
+	}else{
+		$.removeCookie("user_id", { path:'./' });
+	}	
+});
 </script>
+
+
+
 </body>
 </html>
 

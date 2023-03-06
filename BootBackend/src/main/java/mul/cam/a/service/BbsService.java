@@ -13,16 +13,41 @@ import mul.cam.a.dto.BbsParam;
 @Service
 @Transactional
 public class BbsService {
-	
+
 	@Autowired
 	BbsDao dao;
 	
-	public List<BbsDto> bbsList(BbsParam param) {
-		return dao.bbsList(param);
+	public List<BbsDto> bbslist(BbsParam param) {
+		return dao.bbslist(param);
 	}
 	
 	public int getAllBbs(BbsParam param) {
 		return dao.getAllBbs(param);
 	}
-
+	
+	public BbsDto getBbs(int seq) {
+		return dao.getBbs(seq);
+	}
+	
+	public boolean writeBbs(BbsDto bbs) {
+		int n = dao.writeBbs(bbs);
+		return n>0?true:false;
+	}
+	
+	public boolean answerBbs(BbsDto bbs) {
+		dao.answerBbsUpdate(bbs);
+		int n = dao.answerBbsInsert(bbs);
+		return n>0?true:false;
+	}
+	
+	public boolean updateBbs(BbsDto bbs) {
+		int n = dao.updateBbs(bbs);
+		return n>0?true:false;
+	}
+		
 }
+
+
+
+
+

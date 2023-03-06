@@ -15,7 +15,8 @@
 	values(#{id}, #{pwd}, #{name}, #{email}, 3)
 </insert>
 
-<select id="login" parameterType="mul.cam.a.dto.MemberDto" resultType="mul.cam.a.dto.MemberDto">
+<select id="login" parameterType="mul.cam.a.dto.MemberDto"
+	resultType="mul.cam.a.dto.MemberDto">
 	select id, name, email
 	from member
 	where id=#{id} and pwd=#{pwd}
